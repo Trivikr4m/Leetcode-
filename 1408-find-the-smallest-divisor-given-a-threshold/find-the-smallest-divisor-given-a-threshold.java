@@ -3,12 +3,12 @@ class Solution {
         int ans=0,add;
         for(int i=0;i<n.length;i++){
             add = (int)Math.ceil((float)n[i]/d);
-            ans += add;
+            k -= add;
+            if(k<0){
+                return false;
+            }
         }
-        if(ans <= k){
-            return true;
-        }
-        return false;
+        return true;
     }
     public int smallestDivisor(int[] nums, int threshold) {
         int l=1,r=1000000,mid;
