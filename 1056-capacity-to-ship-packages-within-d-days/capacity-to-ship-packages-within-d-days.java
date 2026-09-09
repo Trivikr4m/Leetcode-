@@ -5,11 +5,12 @@ class Solution {
             if(n[i] > m){
                 return false;
             }
-            c+=n[i];
-            if(c > m){
+           
+            if(c + n[i] > m){
                 d--;
-                c = n[i];
+                c = 0;
             }
+            c+=n[i];
             if(d <= 0){
                 return false;
             }
@@ -17,12 +18,8 @@ class Solution {
         return true;
     }
     public int shipWithinDays(int[] weights, int days) {
-        int l=0,r=0,mid;
-        for(int i=0;i<weights.length;i++){
-            r += weights[i] ;
-            l = Math.max(l,weights[i]);
-        }
-            
+        int l=1,r=Integer.MAX_VALUE,mid;
+
             while(l<= r){
                 mid = l+(r-l)/2;
                 if(isCap(weights,days,mid)){
