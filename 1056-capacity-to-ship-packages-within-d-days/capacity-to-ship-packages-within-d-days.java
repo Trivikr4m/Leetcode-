@@ -1,14 +1,16 @@
 class Solution {
     public boolean isCap(int[] n,int d,int m){
         int c=0;
-        d--;
         for(int i=0;i<n.length;i++){
+            if(n[i] > m){
+                return false;
+            }
             c+=n[i];
             if(c > m){
                 d--;
                 c = n[i];
             }
-            if(d < 0){
+            if(d <= 0){
                 return false;
             }
         }
