@@ -1,10 +1,9 @@
 class Solution {
     public boolean isPossible(int[] candies,long k,int max){
-        long count = 0;
         for(int i=0;i<candies.length;i++){
             int val = candies[i];
-            count += val/max;
-            if(count >= k){
+            k -= val/max;
+            if(k <= 0){
                 return true;
             }
         }
