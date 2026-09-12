@@ -16,10 +16,10 @@ class Solution {
         
     }
     public int minimumSize(int[] nums, int maxOperations) {
-        int l=1,r=(int)Math.pow(10,9),m=0;
-        // for(int x : nums){
-        //     r = Math.max(r,x);
-        // }
+        int l=1,r=0,m=0;
+        for(int x : nums){
+            r = Math.max(r,x);
+        }
         while(l<=r){
             m=l+(r-l)/2;
             if(isPossible(nums,maxOperations,m)){
