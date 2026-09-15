@@ -13,18 +13,13 @@ public class Solution {
     public boolean hasCycle(ListNode head) {
         if(head == null || head.next == null) return false;
 
-        HashMap <Integer,Integer> hm = new HashMap<>();
+        HashMap <ListNode,Integer> hm = new HashMap<>();
         ListNode temp = head;
         int cnt = 0;
 
-        
-
         while(temp != null){
-            int val = temp.val;
-            if(hm.containsKey(val)){
-                if(hm.get(val) > 5) return true;
-            }
-            hm.put(val, hm.getOrDefault(val, 0)+1);
+            if(hm.containsKey(temp)) return true;
+            hm.put(temp, 1);
             temp = temp.next;
         }
         return false;
