@@ -22,7 +22,7 @@ public class Solution {
         while(temp != null){
             int val = temp.val;
             if(hm.containsKey(val)){
-                if(hm.get(val) > 50) return true;
+                if(hm.get(val) > 5) return true;
             }
             hm.put(val, hm.getOrDefault(val, 0)+1);
             temp = temp.next;
