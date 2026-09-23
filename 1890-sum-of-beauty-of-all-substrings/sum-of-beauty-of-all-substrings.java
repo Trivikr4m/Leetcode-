@@ -9,7 +9,7 @@ class Solution {
                 int max = 0;
                 for(int k=0;k<26;k++){
                     if(freq[k] > 0){
-                    min = Math.min(min, freq[k]);
+                        min = Math.min(min, freq[k]);
                         max = Math.max(max, freq[k]);
                     }
                 }
