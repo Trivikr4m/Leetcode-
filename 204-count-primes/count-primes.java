@@ -1,0 +1,22 @@
+class Solution {
+    public int countPrimes(int n) {
+        boolean[] notPrime = new boolean[n];
+        int cnt = 0;
+
+        for(int i=2; i*i < n; i++){
+            if(!notPrime[i]){
+                for(int j=i*i; j < n; j+=i){
+                    notPrime[j] = true;
+                }
+            }
+        }
+
+        for(int i=2;i<n;i++){
+            if(!notPrime[i]){
+                cnt++;
+            }
+        }
+
+        return cnt;
+    }
+}
