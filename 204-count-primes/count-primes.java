@@ -1,23 +1,16 @@
 class Solution {
     public int countPrimes(int n) {
-        boolean[] notPrime = new boolean[n];
-        if(n<=2) return 0;
-        int cnt = 0;
-
-        for(int i=2; i*i < n; i++){
-            if(!notPrime[i]){
-                for(int j=i*i; j < n; j+=i){
-                    notPrime[j] = true;
+        if(n<2) return 0;
+        boolean[] isPrime=new boolean[n];
+        int count=0;
+        for(int i=2;i<n;i++){
+            if(!isPrime[i]){
+                count++;
+                for(long j=(long)i*i;j<n;j+=i){
+                    isPrime[(int)j]=true;
                 }
             }
         }
-
-        for(int i=2;i<n;i++){
-            if(!notPrime[i]){
-                cnt++;
-            }
-        }
-
-        return cnt;
+        return count;
     }
 }
