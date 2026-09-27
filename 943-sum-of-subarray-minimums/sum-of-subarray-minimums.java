@@ -1,53 +1,52 @@
 class Solution {
+    int[] findpse(int[] arr){
+        int[] pse = new int[arr.length];
+        Stack <Integer> st = new Stack<>();
+
+        for(int i = 0; i < arr.length; i++){
+            int val = arr[i];
+            while(!st.isEmpty() && arr[st.peek()] > val){
+                st.pop();
+            }
+
+            pse[i] = st.isEmpty() ? -1 : st.peek();
+            st.push(i);
+        }
+        return pse;
+    }
+
+    int[] findnse(int[] arr){
+        int[] nse = new int[arr.length];
+        Stack <Integer> st = new Stack<>();
+
+        for(int i=arr.length - 1; i>= 0; i--){
+            int val = arr[i];
+            while(!st.isEmpty() && arr[st.peek()]>=val){
+                st.pop();
+            }
+            nse[i] = st.isEmpty() ? arr.length : st.peek();
+            st.push(i);
+        }
+        return nse;
+    }
     public int sumSubarrayMins(int[] arr) {
         int n = arr.length;
+        int mod = (int)1e9 + 7;
+
+        int[] leftarr = findpse(arr);
+        int[] rightarr = findnse(arr);
+
         long sum = 0;
-        int mod = (int) 1e9 + 7;
+        for(int i = 0; i<n; i++){
+            int left = i - leftarr[i];
+            int right = rightarr[i] - i;
 
-        Stack<Integer> st = new Stack<>();
-        int[] left = new int[n];
+            long cont = (arr[i] * left) % mod;
+            cont = (cont * right) % mod;
 
-        for (int i = 0; i < n; i++) {
-
-            while (!st.isEmpty() && arr[st.peek()] > arr[i]) {
-                st.pop();
-            }
-
-            if (st.isEmpty()) {
-                left[i] = i + 1;
-            } else {
-                left[i] = i - st.peek();
-            }
-
-            st.push(i);
+            sum = (sum + cont) % mod;
         }
-
-        st.clear();
-
-        int[] right = new int[n];
-
-        for (int i = n - 1; i >= 0; i--) {
-
-            while (!st.isEmpty() && arr[st.peek()] >= arr[i]) {
-                st.pop();
-            }
-
-            if (st.isEmpty()) {
-                right[i] = n - i;
-            } else {
-                right[i] = st.peek() - i;
-            }
-
-            st.push(i);
-        }
-
-        for (int i = 0; i < n; i++) {
-            long contribution =
-                (long) arr[i] * left[i] * right[i];
-
-            sum = (sum + contribution) % mod;
-        }
-
-        return (int) sum;
+        return (int)sum;
     }
+
 }
