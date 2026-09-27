@@ -3,14 +3,14 @@ class Solution {
     long answer = 0;
 
     for (int start = 0; start < nums.length; start++) {
-        int minimum = nums[start];
-        int maximum = nums[start];
+        int min = nums[start];
+        int max = nums[start];
 
         for (int end = start; end < nums.length; end++) {
-            minimum = Math.min(minimum, nums[end]);
-            maximum = Math.max(maximum, nums[end]);
+            min = Math.min(min, nums[end]);
+            max = Math.max(max, nums[end]);
 
-            answer += (long) maximum - minimum;
+            answer += (long) max - min;
         }
     }
 
