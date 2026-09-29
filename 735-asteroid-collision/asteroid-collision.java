@@ -1,44 +1,38 @@
 class Solution {
     public int[] asteroidCollision(int[] asteroids) {
-    ArrayList<Integer> survivors = new ArrayList<>();
+        Stack <Integer> st = new Stack<>();
+        int n = asteroids.length;
 
-    for (int asteroid : asteroids) {
-        if (asteroid > 0) {
-            survivors.add(asteroid);
-        } else {
-            int currentSize = Math.abs(asteroid);
-            boolean destroyed = false;
+        for(int i = 0; i<n; i++){
+            int ast = asteroids[i];
+            int popped = 0;
 
-            while (!survivors.isEmpty()
-                    && survivors.get(survivors.size() - 1) > 0) {
-
-                int topIndex = survivors.size() - 1;
-                int topSize = Math.abs(survivors.get(topIndex));
-
-                if (topSize < currentSize) {
-                    survivors.remove(topIndex);
-                } else {
-                    if (topSize == currentSize) {
-                        survivors.remove(topIndex);
+            if(ast < 0){
+                int pval = ast + (-2*ast);
+                while(!st.isEmpty() && st.peek() > 0 && pval >= st.peek()){
+                    if(pval == st.peek()){
+                        popped = st.peek();
+                        st.pop();
+                        break;
                     }
-
-                    destroyed = true;
-                    break;
+                    popped = st.peek();
+                    st.pop();
                 }
+
+                if(!st.isEmpty() && st.peek() < 0 && popped < pval) st.push(ast);
+                if(st.isEmpty() && pval > popped) st.push(ast);
             }
 
-            if (!destroyed) {
-                survivors.add(asteroid);
-            }
+            if(ast > 0) st.push(ast);
         }
-    }
 
-    int[] answer = new int[survivors.size()];
+        int[] finalAst = new int[st.size()];
+        int j = st.size()-1;
+        while(!st.isEmpty()){
+            finalAst[j--] = st.peek();
+            st.pop();
+        }
 
-    for (int index = 0; index < survivors.size(); index++) {
-        answer[index] = survivors.get(index);
-    }
-
-    return answer;
+        return finalAst;
     }
 }
