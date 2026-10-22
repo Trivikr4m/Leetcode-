@@ -1,42 +1,29 @@
-
 class Solution {
     public int minOperations(int[] nums) {
         int n = nums.length;
-        int zero = 0;
 
-        for (int i = 0; i < n; i++) {
-            if (nums[i] == 0) {
-                zero = i;
-                break;
-            }
+        int asc_order = 0;
+        int des_order = 0;
+
+        for(int i = 1; i < n; i++){
+            if(nums[i] == (nums[i-1]+1)%n) asc_order++;
+            if(nums[i-1] == (nums[i]+1)%n) des_order++;
         }
 
-        int ans = Integer.MAX_VALUE;
+        if(asc_order == n-1 && nums[0] == 0) return 0;
 
-        for (int step : new int[]{1, -1}) {
-            boolean valid = true;
-
-            for (int i = 1; i < n; i++) {
-                int prev = (zero + (i - 1) * step + n) % n;
-                int curr = (zero + i * step + n) % n;
-
-                if (nums[prev] > nums[curr]) {
-                    valid = false;
-                    break;
-                }
-            }
-
-            if (valid) {
-                if (step == 1) {
-                    ans = Math.min(ans, zero);
-                    ans = Math.min(ans, n - zero + 2);
-                } else {
-                    ans = Math.min(ans, zero + 2);
-                    ans = Math.min(ans, n - zero);
-                }
-            }
+        if(asc_order == n-1){
+            int leftRot = n-nums[0];
+            int rightRot = 1 + nums[n-1]+1 + 1;
+            return Math.min(leftRot, rightRot);
         }
 
-        return ans == Integer.MAX_VALUE ? -1 : ans;
+        if(des_order == n-1){
+            int leftRot = n-nums[n-1] + 1;
+            int rightRot = (nums[0]+1)%n + 1;
+            return Math.min(leftRot, rightRot);
+        }
+        return -1;
     }
+
 }
